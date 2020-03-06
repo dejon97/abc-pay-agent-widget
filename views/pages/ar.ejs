@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/head.ejs %>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+
+    <style>
+        .flex-container {
+            display: flex;
+        }
+        
+        .flex-container > div {
+            margin: 5px 5px 5px 0;
+        }
+
+        .container.rich-link {
+            margin: auto !important;
+            width: 300px;     
+        }
+
+        .loader {
+            border: 16px solid #f3f3f3; /* Light grey */
+            border-top: 16px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 90px;
+            height: 90px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <% include ../partials/side-menu.ejs %>
+    <div ng-app="switcher-app">
+      <h4>Sending AR file now...</h4>
+    </div>
+    <script src="../js/global.angular.js"></script>
+    <script src="../js/augmented-reality.js"></script>
+</body>
+</html>

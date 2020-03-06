@@ -1,0 +1,714 @@
+{
+    "": "Each type of structured content resides in a separate entry below. Inside the element, set up the bubble and items (besides catalog).",
+    "widgetButtons":[
+        {
+            "name":"Get Trade-In Information",
+            "action":"section|trade-in"
+        },
+        {
+            "name":"Send Upgrade Options",
+            "action":"catalog"
+        },
+        {
+            "name":"Send Special Offers",
+            "action":"offers"
+        },
+        {
+            "name":"Buy with Apple Pay",
+            "action":"applePay"
+        },
+        {
+            "name":"Post Conversation Survey",
+            "action":"survey"
+        }
+    ],
+    "catalog": {
+        "source": "config",
+        "bubble": {
+            "receivedMessage": {
+                "title": "Upgrade your iPhone.",
+                "subtitle": "Choose your new phone.",
+                "image": "https://static-assets.fs.liveperson.com/ABC/images/phones.png"
+            },
+            "replyMessage": {
+                "title": "Response",
+                "subtitle": "Tap the arrow to proceed with Business Chat",
+                "image": "https://static-assets.fs.liveperson.com/ABC/images/phones-reply.png"
+            },
+            "multipleSelection": false
+        },
+        "items": [
+            {
+                "desc": "Super Retina 5.8 inch display. Even faster Face ID. The smartest, most powerful chip in a smartphone. And a breakthrough dual-camera system with Depth Control. Starting at $999",
+                "name": "Buy iPhone XS",
+                "image": "https://static-assets.fs.liveperson.com/ABC/images/iphone-xs.png",
+                "price": 999,
+                "options": [
+                    {
+                        "name": "color",
+                        "bubble": {
+                            "receivedMessage": {
+                                "title": "CHOOSE A COLOR",
+                                "subtitle": "",
+                                "image": ""
+                            },
+                            "replyMessage": {
+                                "title": "Response",
+                                "subtitle": "Color selected",
+                                "image": ""
+                            },
+                            "multipleSelection": false
+                        },
+                        "items": [
+                            {
+                                "name": "Silver",
+                                "desc": "",
+                                "image": "https://static-assets.fs.liveperson.com/ABC/images/xs-silver.png"
+                            },
+                            {
+                                "name": "Space Gray",
+                                "desc": "",
+                                "image": "https://static-assets.fs.liveperson.com/ABC/images/xs-gray.png"
+                            },
+                            {
+                                "name": "Gold",
+                                "desc": "",
+                                "image": "https://static-assets.fs.liveperson.com/ABC/images/xs-gold.png"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "capacity",
+                        "bubble": {
+                            "receivedMessage": {
+                                "title": "CHOOSE THE CAPACITY",
+                                "desc": "",
+                                "image": ""
+                            },
+                            "replyMessage": {
+                                "title": "Response",
+                                "desc": "Capacity selected",
+                                "image": ""
+                            },
+                            "multipleSelection": false
+                        },
+                        "items": [
+                            {
+                                "name": "64GB",
+                                "desc": "$49.91/mo. or $999.00",
+                                "image": "",
+                                "price": 0
+                            },
+                            {
+                                "name": "256GB",
+                                "desc": "$56.16/mo. or $1,149.00",
+                                "image": "",
+                                "price": 150
+                            },
+                            {
+                                "name": "512GB",
+                                "desc": "$64.50/mo. or $1,349.00",
+                                "image": "",
+                                "price": 350
+                            }
+                        ]
+                    },
+                    {
+                        "name": "accessories",
+                        "bubble": {
+                            "receivedMessage": {
+                                "title": "CHOOSE AN ACCESSORY",
+                                "subtitle": "",
+                                "image": ""
+                            },
+                            "replyMessage": {
+                                "title": "Response",
+                                "subtitle": "Accessory selected",
+                                "image": ""
+                            },
+                            "multipleSelection": false
+                        },
+                        "items": [
+                            {
+                                "name": "Peony Pink Leather Case",
+                                "desc": "$49.00",
+                                "image": "https://static-assets.fs.liveperson.com/ABC/images/xs-case-pink.png",
+                                "price": 49.00
+                            },
+                            {
+                                "name": "Cape Cod Blue Leather Case",
+                                "desc": "$49.00",
+                                "image": "https://static-assets.fs.liveperson.com/ABC/images/xs-case-blue.png",
+                                "price": 49.00
+                            },
+                            {
+                                "name": "Black Leather Case",
+                                "desc": "$49.00",
+                                "image": "https://static-assets.fs.liveperson.com/ABC/images/xs-case-black.png",
+                                "price": 49.00
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "desc": "Super Retina 6.5 inch display. Even faster Face ID. The smartest, most powerful chip in a smartphone. And a breakthrough dual-camera system with Depth Control. Starting at $1099",
+                "name": "Buy iPhone XS Max",
+                "image": "https://static-assets.fs.liveperson.com/ABC/images/iphone-xs-max.png",
+                "options": [
+                    {
+                        "name": "color",
+                        "bubble": {
+                            "receivedMessage": {
+                                "title": "CHOOSE THE COLOR",
+                                "subtitle": "",
+                                "image": ""
+                            },
+                            "replyMessage": {
+                                "title": "Response",
+                                "subtitle": "Color selected",
+                                "image": ""
+                            },
+                            "multipleSelection": false
+                        },
+                        "items": [
+                            {
+                                "name": "Silver",
+                                "desc": "",
+                                "image": "https://static-assets.fs.liveperson.com/ABC/images/xs-max-silver.png"
+                            },
+                            {
+                                "name": "Space Gray",
+                                "desc": "",
+                                "image": "https://static-assets.fs.liveperson.com/ABC/images/xs-max-gray.png"
+                            },
+                            {
+                                "name": "Gold",
+                                "desc": "",
+                                "image": "https://static-assets.fs.liveperson.com/ABC/images/xs-max-gold.png"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "capacity",
+                        "bubble": {
+                            "receivedMessage": {
+                                "title": "CHOOSE THE CAPACITY",
+                                "subtitle": "",
+                                "image": ""
+                            },
+                            "replyMessage": {
+                                "title": "Response",
+                                "subtitle": "Capacity selected",
+                                "image": ""
+                            },
+                            "multipleSelection": false
+                        },
+                        "items": [
+                            {
+                                "name": "64GB",
+                                "desc": "$54.08/mo. or $1,099.00",
+                                "image": ""
+                            },
+                            {
+                                "name": "256GB",
+                                "desc": "$60.33/mo. or $1,249.00",
+                                "image": ""
+                            },
+                            {
+                                "name": "512GB",
+                                "desc": "$68.66/mo. or $1,449.00",
+                                "image": ""
+                            }
+                        ]
+                    },
+                    {
+                        "name": "accessories",
+                        "bubble": {
+                            "receivedMessage": {
+                                "title": "CHOOSE AND ACCESSORY",
+                                "subtitle": "",
+                                "image": ""
+                            },
+                            "replyMessage": {
+                                "title": "Response",
+                                "subtitle": "Accessory selected",
+                                "image": ""
+                            },
+                            "multipleSelection": false
+                        },
+                        "items": [
+                            {
+                                "name": "Peony Pink Leather Case",
+                                "desc": "$49",
+                                "image": "https://static-assets.fs.liveperson.com/ABC/images/xs-max-case-pink.png",
+                                "price": 49
+                            },
+                            {
+                                "name": "Cape Cod Blue Leather Case",
+                                "desc": "$49",
+                                "image": "https://static-assets.fs.liveperson.com/ABC/images/xs-max-case-blue.png",
+                                "price": 49
+                            },
+                            {
+                                "name": "Black Leather Case",
+                                "desc": "$49",
+                                "image": "https://static-assets.fs.liveperson.com/ABC/images/xs-max-case-black.png",
+                                "price": 49
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "desc": "All screen 6.1 inch design. Longest battery life ever. Fastest performance. Water and splash resistant. Studio-quality photos and 4K video. More secure with Face ID. Starting at $749",
+                "name": "Buy iPhone XR",
+                "image": "https://static-assets.fs.liveperson.com/ABC/images/iphone-xr.png",
+                "options": [
+                    {
+                        "name":"color",
+                        "bubble": {
+                            "receivedMessage": {
+                                "title": "CHOOSE THE COLOR",
+                                "subtitle": "",
+                                "image": ""
+                            },
+                            "replyMessage": {
+                                "title": "Response",
+                                "subtitle": "Color selected",
+                                "image": ""
+                            },
+                            "multipleSelection": false
+                        },
+                        "items": [
+                            {
+                                "name": "White",
+                                "desc": "",
+                                "image": "https://static-assets.fs.liveperson.com/ABC/images/xr-white.png"
+                            },
+                            {
+                                "name": "Black",
+                                "desc": "",
+                                "image": "https://static-assets.fs.liveperson.com/ABC/images/xr-black.png"
+                            },
+                            {
+                                "name": "Yellow",
+                                "desc": "",
+                                "image": "https://static-assets.fs.liveperson.com/ABC/images/xr-yellow.png"
+                            },
+                            {
+                                "name": "Coral",
+                                "desc": "",
+                                "image": "https://static-assets.fs.liveperson.com/ABC/images/xr-coral.png"
+                            },
+                            {
+                                "name": "Blue",
+                                "desc": "",
+                                "image": "https://static-assets.fs.liveperson.com/ABC/images/xr-blue.png"
+                            },
+                            {
+                                "name": "Red",
+                                "desc": "",
+                                "image": "https://static-assets.fs.liveperson.com/ABC/images/xr-red.png"
+                            }
+                        ]
+                    },
+                    {
+                        "name":"capacity",
+                        "bubble": {
+                            "receivedMessage": {
+                                "title": "CHOOSE THE CAPACITY",
+                                "subtitle": "",
+                                "image": ""
+                            },
+                            "replyMessage": {
+                                "title": "Response",
+                                "subtitle": "Capacity selected",
+                                "image": ""
+                            },
+                            "multipleSelection": false
+                        },
+                        "items": [
+                            {
+                                "name": "64GB",
+                                "desc": "$37.41/mo. or $749.00",
+                                "image": ""
+                            },
+                            {
+                                "name": "256GB",
+                                "desc": "$39.50/mo. or $799.00",
+                                "image": ""
+                            },
+                            {
+                                "name": "512GB",
+                                "desc": "$43.66/mo. or $899.00",
+                                "image": ""
+                            }
+                        ]
+                    },
+                    {
+                        "name": "accessories",
+                        "bubble": {
+                            "receivedMessage": {
+                                "title": "CHOOSE AN ACCESSORY",
+                                "subtitle": "",
+                                "image": ""
+                            },
+                            "replyMessage": {
+                                "title": "Response",
+                                "subtitle": "Accessory selected",
+                                "image": ""
+                            },
+                            "multipleSelection": false
+                        },
+                        "items": [
+                            {
+                                "name": "Clear Case",
+                                "desc": "$39.00",
+                                "image": "https://static-assets.fs.liveperson.com/ABC/images/xr-case-clear.png",
+                                "price": 39.00
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "desc": "4.7-inch display",
+                "name": "Buy iPhone 8",
+                "image": "https://static-assets.fs.liveperson.com/ABC/images/iphone-8.png"
+            },
+            {
+                "desc": "5.5-inch display",
+                "name": "Buy iPhone 8 Plus",
+                "image": "https://static-assets.fs.liveperson.com/ABC/images/iphone-8.png"
+            }
+        ]
+    },
+    "trades": {
+        "bubble": {
+            "receivedMessage": {
+                "title": "Trade in your iPhone.",
+                "subtitle": "Choose the model you're trading in.",
+                "image": "https://static-assets.fs.liveperson.com/ABC/images/phones.png"
+            },
+            "replyMessage": {
+                "title": "Response",
+                "image": "https://static-assets.fs.liveperson.com/ABC/images/phones-reply.png",
+                "subtitle": "Tap the arrow to proceed with Business Chat"
+            },
+            "multipleSelection": false
+        },
+        "items": [
+            {
+                "name": "iPhone X",
+                "desc": "Trade in value up to $500*",
+                "image": "https://static-assets.fs.liveperson.com/ABC/images/iphone-x.png"
+            },
+            {
+                "name": "iPhone 8",
+                "desc": "Trade in value up to $300*",
+                "image": "https://static-assets.fs.liveperson.com/ABC/images/iphone-8.png"
+            },
+            {
+                "name": "iPhone 8 Plus",
+                "desc": "Trade in value up to $370*",
+                "image": "https://static-assets.fs.liveperson.com/ABC/images/iphone-8-plus.png"
+            },
+            {
+                "name": "iPhone 7",
+                "desc": "Trade in value up to $250*",
+                "image": "https://static-assets.fs.liveperson.com/ABC/images/iphone-7.png"
+            }
+        ]
+    },
+    "turnson": {
+        "bubble": {
+            "receivedMessage": {
+                "title": "Does your device turn on?",
+                "subtitle": "",
+                "image": ""
+            },
+            "replyMessage": {
+                "title": "Power status selected",
+                "subtitle": "Tap the arrow to proceed with Business Chat",
+                "image": ""
+            },
+            "multipleSelection": false
+        },
+        "items": [
+            {
+                "name": "Yes, it turns on",
+                "desc": "",
+                "image": "",
+                "price": 0
+            },
+            {
+                "name": "No, it doesn't turn on",
+                "desc": "",
+                "image": "",
+                "price": 0
+            }
+        ]
+    },
+    "condition": {
+        "bubble": {
+            "receivedMessage": {
+                "title": "Is the enclosure in good shape, and do all the buttons work?",
+                "subtitle": "",
+                "image": ""
+            },
+            "replyMessage": {
+                "title": "Condition selected",
+                "subtitle": "Tap the arrow to proceed with Business Chat",
+                "image": ""
+            },
+            "multipleSelection": false
+        },
+        "items": [
+            {
+                "name": "Yes, it's in good shape",
+                "desc": "",
+                "image": "",
+                "price": 0
+            },
+            {
+                "name": "No, it's not in good shape",
+                "desc": "",
+                "image": "",
+                "price": 0
+            }
+        ]
+    },
+    "screen": {
+        "bubble": {
+            "receivedMessage": {
+                "title": "How's the screen?",
+                "subtitle": "",
+                "image": ""
+            },
+            "replyMessage": {
+                "title": "Screen status selected",
+                "subtitle": "Tap the arrow to proceed with Business Chat",
+                "image": ""
+            },
+            "multipleSelection": false
+        },
+        "items": [
+            {
+                "name": "The screen is in good shape",
+                "desc": "",
+                "image": "",
+                "price": 0
+            },
+            {
+                "name": "The screen is damaged",
+                "desc": "",
+                "image": "",
+                "price": 0
+            }
+        ]
+    },
+    "payment": {
+        "bubble": {
+            "receivedMessage": {
+                "title": "CHOOSE YOUR MONTHLY PLAN",
+                "subtitle": "",
+                "image": ""
+            },
+            "replyMessage": {
+                "title": "Monthly plan selected",
+                "subtitle": "Tap the arrow to proceed with Business Chat",
+                "image": ""
+            },
+            "multipleSelection": false
+        },
+        "items": [
+            {
+                "name": "18 month leasing plan",
+                "desc": "",
+                "image": "",
+                "price": 0
+            },
+            {
+                "name": "24 month installment plan",
+                "desc": "",
+                "image": "",
+                "price": 0
+            },
+            {
+                "name": "30 month financing plan",
+                "desc": "",
+                "image": "",
+                "price": 0
+            }
+        ]
+    },
+    "offers": {
+        "bubble": {
+            "receivedMessage": {
+                "title": "Special Offers",
+                "subtitle": "",
+                "image": "https://static-assets.fs.liveperson.com/ABC/images/special-offers.png"
+            },
+            "replyMessage": {
+                "title": "Special offers selected",
+                "subtitle": "Tap the arrow to proceed with Business Chat",
+                "image": "https://static-assets.fs.liveperson.com/ABC/images/special-offers-reply.png"
+            },
+            "multipleSelection": true
+        },
+        "items": [
+            {
+                "name": "International roaming",
+                "desc": "$20 per month",
+                "image": "https://static-assets.fs.liveperson.com/ABC/images/roaming.png",
+                "price": 20
+            },
+            {
+                "name": "TV package",
+                "desc": "$50 per month",
+                "image": "https://static-assets.fs.liveperson.com/ABC/images/tv.png",
+                "price": 50
+            },
+            {
+                "name": "Extended warranty",
+                "desc": "$12 per month",
+                "image": "https://static-assets.fs.liveperson.com/ABC/images/warranty.png",
+                "price": 12
+            }
+        ]
+    },
+    "delivery": {
+        "bubble": {
+            "receivedMessage": {
+                "title": "GETTING YOUR NEW PHONE",
+                "subtitle": "",
+                "image": "https://static-assets.fs.liveperson.com/ABC/images/deliver.png"
+            },
+            "replyMessage": {
+                "title": "Getting phone option selected",
+                "subtitle": "Tap the arrow to proceed with Business Chat",
+                "image": "https://static-assets.fs.liveperson.com/ABC/images/deliver.png"
+            },
+            "multipleSelection": false
+        },
+        "items": [
+            {
+                "name": "Pick up in store",
+                "desc": "",
+                "image": "https://static-assets.fs.liveperson.com/ABC/images/store.png",
+                "price": 0
+            },
+            {
+                "name": "Delivery",
+                "desc": "",
+                "image": "https://static-assets.fs.liveperson.com/ABC/images/deliver.png",
+                "price": 0
+            }
+        ]
+    },
+    "survey": {
+        "bubble": {
+            "receivedMessage": {
+                "title": "Please rate your experience",
+                "subtitle": "Select one",
+                "image": "https://static-assets.dev.fs.liveperson.com/ABC/images/smiley-4.png"
+            },
+            "replyMessage": {
+                "title": "Experience rating",
+                "subtitle": "Tap the arrow to proceed with Business Chat",
+                "image": "https://static-assets.dev.fs.liveperson.com/ABC/images/smiley-5.png"
+            },
+            "multipleSelection": false
+        },
+        "items": [
+            {
+                "name": "Excellent",
+                "desc": "",
+                "image": "https://static-assets.dev.fs.liveperson.com/ABC/images/smiley-5.png",
+                "price": 0
+            },
+            {
+                "name": "Good",
+                "desc": "",
+                "image": "https://static-assets.dev.fs.liveperson.com/ABC/images/smiley-4.png",
+                "price": 0
+            },
+            {
+                "name": "Average",
+                "desc": "",
+                "image": "https://static-assets.dev.fs.liveperson.com/ABC/images/smiley-3.png",
+                "price": 0
+            },
+            {
+                "name": "Poor",
+                "desc": "",
+                "image": "https://static-assets.dev.fs.liveperson.com/ABC/images/smiley-2.png",
+                "price": 0
+            },
+            {
+                "name": "Terrible",
+                "desc": "",
+                "image": "https://static-assets.dev.fs.liveperson.com/ABC/images/smiley-1.png",
+                "price": 0
+            }
+        ]
+    },
+    "checkout": {
+        "bubble": {
+            "receivedMessage": {
+                "title": "Payment and Delivery",
+                "subtitle": "Select your preference.",
+                "image": "https://static-assets.fs.liveperson.com/ABC/images/cart.png"
+            },
+            "replyMessage": {
+                "title": "Checkout options selected",
+                "subtitle": "Tap the arrow to proceed with Business Chat",
+                "image": "https://static-assets.fs.liveperson.com/ABC/images/cart-reply.png"
+            },
+            "multipleSelection": false
+        }
+    },
+    "trade-in": {
+        "bubble": {
+            "receivedMessage": {
+                "title": "Trade-in Information",
+                "subtitle": "Please answer a few questions about your trade.",
+                "image": "https://static-assets.fs.liveperson.com/ABC/images/phones.png"
+            },
+            "replyMessage": {
+                "title": "iPhone model selected",
+                "subtitle": "Tap the arrow to proceed with Business Chat",
+                "image": "https://static-assets.fs.liveperson.com/ABC/images/phones-reply.png"
+            },
+            "multipleSelection": false
+        }
+    },
+    "options": {
+        "bubble": {
+            "receivedMessage": {
+                "title": "Phone Options",
+                "subtitle": "Choose the options for your phone",
+                "image": "https://static-assets.fs.liveperson.com/ABC/images/options.png"
+            },
+            "replyMessage": {
+                "title": "Options selected",
+                "subtitle": "Tap the arrow to proceed with Business Chat",
+                "image": "https://static-assets.fs.liveperson.com/ABC/images/options-reply.png"
+            },
+            "multipleSelection": false
+        }
+    },
+    "sections": {
+        "trade-in": [
+            "trades",
+            "turnson",
+            "condition",
+            "screen"
+        ],
+        "options": [
+            "payment",
+            "delivery"
+        ]
+    }
+}

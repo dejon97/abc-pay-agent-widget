@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>    
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous"><script src="https://js.braintreegateway.com/web/3.39.0/js/client.min.js"></script>  
+    <script src="https://js.braintreegateway.com/web/3.39.0/js/apple-pay.min.js"></script>
+    <% include ../partials/head.ejs %>
+    <style>
+    #content{
+      padding: 0px !important;
+    }
+    .modal-content{
+      padding: 0px !important;
+      min-height: 840px;
+    }
+    .panel-header{
+      padding: 0px !important;
+    }
+    .modal{
+      padding: 0px !important
+    }
+    </style>
+</head>
+<body>
+    <% include ../partials/side-menu.ejs %>
+    <div  ng-app="switcher-app">
+        <div ng-controller="listPickerCtrl">
+            <div ng-show=vm.bubbleeditor_active class="modal" id=myModal ng-cloak>
+              <div class=modal-content>
+                <div id=content>
+                  <div class=panel-header>
+                    <div ng-click=toggleBubbleEditor() style="cursor:pointer;padding:5px;text-align:center">
+                      <img src=./img/icons/arrow.png style="height: 15px; width: auto;">
+                    </div>
+                    <hr class=modal-hr>
+                    <div class=modal-panel-title-group>
+                      <h4 class=modal-panel-title>List Picker Configuration</h4>
+                    </div>
+                    <hr class=modal-hr>
+                  </div>
+                </div>
+                <div id=panel-body>
+                    <label for="bubbleTitle">Received Message Title </label>
+                    <input type="text" class="search-bar-main" id="bubbleTitle" ng-model="bubble[vm.vertical].receivedMessage.title" placeholder="Enter bubble title"><br>
+                    <label for="bubbleSubtitle">Received Message Subtitle  </label>
+                    <input type="text" class="search-bar-main" id="bubbleSubtitle" ng-model="bubble[vm.vertical].receivedMessage.subtitle"  placeholder="Enter bubble subtitle"><br>
+                    <label for="bubbleReply">Reply Message Title </label>
+                    <input type="text" class="search-bar-main" id="bubbleReply" ng-model="bubble[vm.vertical].replyMessage.title" placeholder="Enter bubble reply title"><br>
+                    <label for="bubbleEvent">Reply Message Subtitle </label>
+                    <input type="text" class="search-bar-main" id="bubbleEvent" ng-model="bubble[vm.vertical].replyMessage.subtitle" placeholder="Enter bubble reply subtitle">
+                    <br>
+                    <label for="multipleSelect">Multiple Selection? </label>
+                    <input name="multipleSelect" id="multipleSelect" type="checkbox" ng-model="bubble[vm.vertical].multipleSelection">
+                    <br>
+                    <label for="bubbleImage">Bubble Image </label>
+                    <input type="text" class="search-bar-main" id="bubbleImage" ng-model="bubble[vm.vertical].imageUrl" placeholder="Enter image url">
+                    <br>
+                    <br>
+                    <hr class=modal-hr>
+                    <h4>Add new item to "Retail Misc" Vertical</h4>
+                    <label for="itemName">Item Name</label>
+                    <input type="text" class="search-bar-main" id="itemName" ng-model="data.retailMiscNew.name"  placeholder="Enter Item name"><br>
+                    <label for="imageURL">Image URL (It needs to be on a white-listed domain in Houston)</label>
+                    <input type="text" class="search-bar-main" id="imageURL" ng-model="data.retailMiscNew.image"  placeholder="Enter Item Image url"><br>
+                    <label for="itemDesc">Description</label>
+                    <input type="text" class="search-bar-main" id="itemDesc" ng-model="data.retailMiscNew.desc"  placeholder="Enter Item description"><br>
+                    <label for="itemMeta">Item Keywords (Comma separated!)</label>
+                    <input type="text" class="search-bar-main" id="itemMeta" ng-model="data.retailMiscNew.meta"  placeholder="Enter Item's Searchabe Keywords"><br>
+                    <label for="itemPrice">Item Keywords (Comma separated!)</label>
+                    <input type="text" class="search-bar-main" id="itemPrice" ng-model="data.retailMiscNew.price"  placeholder="Enter Item Price"><br>
+                    <br>
+                    <button class="btn white-button" ng-click="submitNewItem()">Submit new Item</button>
+                </div>
+                </div>
+              </div>
+            <div class="container">
+                <button class="btn btn-large btn-primary" style="position:absolute; top:10px; right:0;" ng-click="toggleBubbleEditor()">Configure</button>
+                <p>
+                  <h4>List Picker
+                    <select style="margin-left: 50px;" ng-model="vm.vertical" ng-model-options="{debounce: 500}"  ng-change="updateCatalog()">
+                      <option value="retail">Vertical - Retail Clothing</option>
+                      <option value="banking">Vertical - Banking</option>
+                      <option value="travel">Vertical - Travel</option>
+                      <option value="insurance">Vertical - Insurance</option>
+                      <option value="automotive">Vertical - Automotive</option>
+                      <option value="wireless">Vertical - Wireless</option>
+                      <option value="software">Vertical - Software and SAAS Subscriptions</option>
+                      <option value="retailManual">Vertical - Retail Misc</option>
+                    </select>
+                  </h4>
+                </p>
+                <div class="input-group search-container">
+                  <div class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></div>
+                  <input type="text" name="search-bar" placeholder="Enter Search Query" id="search-bar" ng-model="data.query" ng-model-options="{debounce: 750}" ng-change="updateResults()" class="form-control search-bar-main">
+                </div>
+                <div class="results-container">
+                    <p class="result-text" ng-show="vm.results.length == 0">Search for clothing items, and share them using the list module</p>
+        
+                    <ul ng-show="vm.results.length > 0">
+                      <li class="list-picker-top-header">
+                        <div class="col-xs-2 text-center" style="background-color:#fff; border-radius: 8px 0px 0px 0px;">Add
+                        </div>
+                        <div class="col-xs-10 text-center" style="background-color:#fff; border-radius: 0px 8px 0px 0px;">Item Name
+                        </div>
+                      </li>
+                      <li class="list-results" ng-repeat="result in vm.results track by $index" ng-cloak>
+                        <div>
+                          <div class="col-xs-2 text-center" style="min-height: 45px; background-color: #faf9f9; ">
+                            <input type="checkbox" ng-model="result.selected" ng-click="updateSelection(result)" style="vertical-align: middle;" >
+                          </div>
+                          <div class="col-xs-10" style="max-height: 45px; background-color: #faf9f9; white-space: nowrap;">
+                            <img style="max-height: 40px; height:auto; width:auto;" ng-src="{{result.image}}">
+                              &nbsp;&nbsp;{{result.name}}
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                </div>
+                <div>
+                  <button ng-click="selectAll()" class="btn white-button">Select All</button>
+                  <button ng-click="deselectAll()" class="btn white-button">Deselect All</button>
+                  <button ng-click="sendSC()" class="btn orange-button">Send as Structured Content</button>
+                  <button ng-click="sendPayBubble()" class="btn white-button"><i class="fab fa-apple"></i> Send Apple Pay</button>
+                </div>
+              </div>
+        
+        
+        </div>
+    </div>
+    <script src="./js/global.angular.js"></script>
+    <script src="./js/listpicker.js"></script>
+</body>
+</html>

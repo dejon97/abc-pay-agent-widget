@@ -1,0 +1,116 @@
+{
+    "": "Each type of structured content resides in a separate entry below. Inside the element, set up the bubble and items (besides catalog).",
+    "widgetButtons":[
+        {
+            "name":"Foundation",
+            "action":"section|foundation"
+        },
+        {
+            "name":"Diagnostic",
+            "action":"diagnostic"
+        }
+    ],
+    "foundation": {
+        "bubble": {
+            "receivedMessage": {
+                "title": "How would you describe your skin tone?",
+                "subtitle": "",
+                "image": ""
+            },
+            "replyMessage": {
+                "title": "Response",
+                "image": "",
+                "subtitle": "Tap the arrow to proceed with Business Chat"
+            },
+            "multipleSelection": false
+        }
+    },
+    "skin_tone": {
+        "bubble": {
+            "receivedMessage": {
+                "title": "How would you describe your skin tone?",
+                "subtitle": "",
+                "image": ""
+            },
+            "replyMessage": {
+                "title": "Response",
+                "subtitle": "Tap the arrow to proceed with Business Chat",
+                "image": ""
+            },
+            "multipleSelection": false
+        },
+        "items": [
+            {
+                "name": "Very Fair",
+                "desc": "",
+                "image": "",
+                "price": 0
+            },
+            {
+                "name": "Moderately Fair",
+                "desc": "",
+                "image": "",
+                "price": 0
+            },
+            {
+                "name": "Medium",
+                "desc": "",
+                "image": "",
+                "price": 0
+            },
+            {
+                "name": "Dark",
+                "desc": "",
+                "image": "",
+                "price": 0
+            },
+            {
+                "name": "Unsure",
+                "desc": "",
+                "image": "",
+                "price": 0
+            }
+        ]
+    },
+    "undertone": {
+        "bubble": {
+            "receivedMessage": {
+                "title": "What is your skin's undertone?",
+                "subtitle": "",
+                "image": ""
+            },
+            "replyMessage": {
+                "title": "Undertone selected",
+                "subtitle": "Tap the arrow to proceed with Business Chat",
+                "image": ""
+            },
+            "multipleSelection": false
+        },
+        "items": [
+            {
+                "name": "Cool: undertone looks pink, red or blue",
+                "desc": "",
+                "image": "",
+                "price": 0
+            },
+            {
+                "name": "Warm: undertone looks peach, yellow or golden",
+                "desc": "",
+                "image": "",
+                "price": 0
+            },
+            {
+                "name": "Unsure",
+                "desc": "",
+                "image": "",
+                "price": 0
+            }
+        ]
+    },
+    "sections": {
+        "foundation": [
+            "skin_tone",
+            "undertone"
+        ]
+    }
+}

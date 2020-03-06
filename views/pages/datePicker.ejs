@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <% include ../partials/head.ejs %>
+    <link rel="stylesheet" href="./css/cal.css">
+</head>
+
+<body>
+  <% include ../partials/side-menu.ejs %>
+    <div ng-app="switcher-app" ng-controller="datePickerCtrl">
+      <div ng-show=vm.bubbleeditor_active class=modal id=myModal ng-cloak>
+        <div class=modal-content>
+          <div id=content>
+            <div class=panel-header>
+              <div ng-click=togglePreview() style="cursor:pointer;padding:5px;text-align:center">
+                <img src=./img/icons/arrow.png style="height: 15px; width: auto;">
+              </div>
+              <hr class=modal-hr>
+              <div class=modal-panel-title-group>
+                <h4 class=modal-panel-title>{{vm.title}}</h4>
+                <div class=modal-panel-desc>{{vm.subtitle}}</div>
+              </div>
+              <hr class=modal-hr>
+            </div>
+          </div>
+          <div id=panel-body>
+            <div id=panel-body-desc>
+              <div class=modal-panel-body-desc>{{vm.choice}}</div>
+            </div>
+            <hr class=underline>
+            <ul class=modal-options>
+              <li ng-repeat="(date, times) in selectedDateObjects track by $index" class=modal-panel-option>
+                <div class=modal-panel-option-text>
+                  {{date}}
+                  <span style="color:blue; cursor:pointer; font-size: 13px; padding-left: 50px;" ng-show="times.length > 3">Show More</span>
+                  <br>
+                  <ul class="nav nav-pills">
+                    <li ng-repeat="time in times|limitTo:3">
+                      <a class="preview-time-selections">{{time}}</a>
+                    </li>
+                    &nbsp;&nbsp;
+                  </ul>
+                </div>
+                <hr ng-show="!$last" class=segment>
+              </li>
+            </ul>
+            <hr class=modal-hr>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="col-xs-11">
+          <button class="btn btn-large btn-primary" style="position:absolute; top:4px; right:0;" ng-click="toggleBubbleEditor()">Configure</button>
+          <h4>Date Picker</h4>
+          <div>
+
+            <div ng-show=vm.bubbleeditor_active class=modal id=myModal ng-cloak>
+              <div class=modal-content>
+                <div id=content>
+                  <div class=panel-header>
+                    <div ng-click=toggleBubbleEditor() style="cursor:pointer;padding:5px;text-align:center">
+                      <img src=./img/icons/arrow.png style="height: 15px; width: auto;">
+                    </div>
+                    <hr class=modal-hr>
+                    <div class=modal-panel-title-group>
+                      <h4 class=modal-panel-title>DateTime Picker Configuration</h4>
+                    </div>
+                    <hr class=modal-hr>
+                  </div>
+                </div>
+                <div id=panel-body>
+                  <div class="bubble-form-group">
+                    <label for="bubbleTitle">Title </label>
+                    <input type="text" class="search-bar-main" id="bubbleTitle" ng-model="vm.title" placeholder="Enter bubble title">
+
+                    <br>
+                    <label for="bubbleSubtitle">Subtitle </label>
+                    <input type="text" class="search-bar-main" id="bubbleSubtitle" ng-model="vm.subtitle" placeholder="Enter bubble subtitle">
+                    <br>
+                    <label for="bubbleReply">Reply </label>
+                    <input type="text" class="search-bar-main" id="bubbleReply" ng-model="vm.reply" placeholder="Enter bubble reply">
+                    <br>
+                    <label for="bubbleEvent">Event </label>
+                    <input type="text" class="search-bar-main" id="bubbleEvent" ng-model="vm.event" placeholder="Enter bubble event">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="input-group search-container" style="padding-bottom: 10px;">
+              <div class="input-group-addon">
+                <i class="fa fa-search" aria-hidden="true"></i>
+              </div>
+              <input type="date" name="date-bar" id="date-bar" ng-model="data.queryDate" ng-model-options="{debounce: 750}" ng-change="updateCalendar()"
+                class="form-control search-bar-main">
+            </div>
+            <div ng-hide="vm.state === 'NOT SENT'" style="padding-top: 112px;" class="list-picker-start text-center" ng-cloak>
+              <img src="./img/icons/green_checkmark.png" style="height: 35px; width: auto;padding-bottom:10px;">
+              <br>
+              <span>Dates Sent</span>
+            </div>
+
+            <div ng-hide="vm.state === 'SENT' || data.queryDate" style="padding-top: 112px;" class="list-picker-start text-center">
+              <span>Select a date using the Date Picker module.</span>
+            </div>
+            <div class="cal-wrapper" ng-show="data.queryDate && vm.state === 'NOT SENT'" ng-cloak>
+              <div class="topnav">
+                <div class="month">
+                  <ul>
+                    <li class="prev" style="cursor:pointer;font-size:18px" ng-click="moveQueryDate(-2)">&#10094;</li>
+                    <li class="next" style="cursor:pointer;font-size:18px" ng-click="moveQueryDate(2)">&#10095;</li>
+                    <li>
+                      {{vm.month}}
+                      <br>
+                      <span style="font-size:12px">{{vm.year}}</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <ul class="weekdays">
+                  <li>{{vm.day}}&nbsp;&nbsp;&nbsp;&nbsp;{{vm.dow}}</li>
+                  <li>{{getDayAt(1).day}}&nbsp;&nbsp;&nbsp;&nbsp;{{getDayAt(1).dow}}</li>
+                  <li>{{getDayAt(2).day}}&nbsp;&nbsp;&nbsp;&nbsp;{{getDayAt(2).dow}}</li>
+                </ul>
+              </div>
+              <hr>
+              <div class="col-xs-4 calendar-day-left">
+                <div ng-class="{ 'active': isSelected(0, 'T09:00:00Z'), 'dormant': !isSelected(0, 'T09:00:00Z') }" ng-click="toggleItem(0, 'T09:00:00Z')">9:00 - 9:30am</div>
+                <hr class="half-hour">
+                <div ng-class="{ 'active': isSelected(0, 'T09:30:00Z'), 'dormant': !isSelected(0, 'T09:30:00Z') }" ng-click="toggleItem(0, 'T09:30:00Z')">9:30 - 10:00am</div>
+                <hr class="hour">
+                <div ng-class="{ 'active': isSelected(0, 'T10:00:00Z'), 'dormant': !isSelected(0, 'T10:00:00Z') }" ng-click="toggleItem(0, 'T10:00:00Z')">10:00 - 10:30am</div>
+                <hr class="half-hour">
+                <div ng-class="{ 'active': isSelected(0, 'T10:30:00Z'), 'dormant': !isSelected(0, 'T10:30:00Z') }" ng-click="toggleItem(0, 'T10:30:00Z')">10:30 - 11:00am</div>
+                <hr class="hour">
+                <div ng-class="{ 'active': isSelected(0, 'T11:00:00Z'), 'dormant': !isSelected(0, 'T11:00:00Z') }" ng-click="toggleItem(0, 'T11:00:00Z')">11:00 - 11:30am</div>
+                <hr class="half-hour">
+                <div ng-class="{ 'active': isSelected(0, 'T11:30:00Z'), 'dormant': !isSelected(0, 'T11:30:00Z') }" ng-click="toggleItem(0, 'T11:30:00Z')">11:30 - 12:00pm</div>
+                <hr class="hour">
+                <div ng-class="{ 'active': isSelected(0, 'T12:00:00Z'), 'dormant': !isSelected(0, 'T12:00:00Z') }" ng-click="toggleItem(0, 'T12:00:00Z')">12:00 - 12:30pm</div>
+                <hr class="half-hour">
+                <div ng-class="{ 'active': isSelected(0, 'T12:30:00Z'), 'dormant': !isSelected(0, 'T12:30:00Z') }" ng-click="toggleItem(0, 'T12:30:00Z')">12:30 - 1:00pm</div>
+                <hr class="hour">
+                <div ng-class="{ 'active': isSelected(0, 'T13:00:00Z'), 'dormant': !isSelected(0, 'T13:00:00Z') }" ng-click="toggleItem(0, 'T13:00:00Z')">1:00 - 1:30pm</div>
+                <hr class="half-hour">
+                <div ng-class="{ 'active': isSelected(0, 'T13:30:00Z'), 'dormant': !isSelected(0, 'T13:30:00Z') }" ng-click="toggleItem(0, 'T13:30:00Z')">1:30 - 2:00pm</div>
+                <hr class="hour">
+                <div ng-class="{ 'active': isSelected(0, 'T14:00:00Z'), 'dormant': !isSelected(0, 'T14:00:00Z') }" ng-click="toggleItem(0, 'T14:00:00Z')">2:00 - 2:30pm</div>
+                <hr class="half-hour">
+                <div ng-class="{ 'active': isSelected(0, 'T14:30:00Z'), 'dormant': !isSelected(0, 'T14:30:00Z') }" ng-click="toggleItem(0, 'T14:30:00Z')">2:30 - 3:00pm</div>
+                <hr class="hour">
+                <div ng-class="{ 'active': isSelected(0, 'T15:00:00Z'), 'dormant': !isSelected(0, 'T15:00:00Z') }" ng-click="toggleItem(0, 'T15:00:00Z')">3:00 - 3:30pm</div>
+                <hr class="half-hour">
+                <div ng-class="{ 'active': isSelected(0, 'T15:30:00Z'), 'dormant': !isSelected(0, 'T15:30:00Z') }" ng-click="toggleItem(0, 'T15:30:00Z')">3:30 - 4:00pm</div>
+              </div>
+              <div class="col-xs-4 calendar-day-left">
+                <div ng-class="{ 'active': isSelected(1, 'T09:00:00Z'), 'dormant': !isSelected(1, 'T09:00:00Z') }" ng-click="toggleItem(1, 'T09:00:00Z')">9:00 - 9:30am</div>
+                <hr class="half-hour">
+                <div ng-class="{ 'active': isSelected(1, 'T09:30:00Z'), 'dormant': !isSelected(1, 'T09:30:00Z') }" ng-click="toggleItem(1, 'T09:30:00Z')">9:30 - 10:00am</div>
+                <hr class="hour">
+                <div ng-class="{ 'active': isSelected(1, 'T10:00:00Z'), 'dormant': !isSelected(1, 'T10:00:00Z') }" ng-click="toggleItem(1, 'T10:00:00Z')">10:00 - 10:30am</div>
+                <hr class="half-hour">
+                <div ng-class="{ 'active': isSelected(1, 'T10:30:00Z'), 'dormant': !isSelected(1, 'T10:30:00Z') }" ng-click="toggleItem(1, 'T10:30:00Z')">10:30 - 11:00am</div>
+                <hr class="hour">
+                <div ng-class="{ 'active': isSelected(1, 'T11:00:00Z'), 'dormant': !isSelected(1, 'T11:00:00Z') }" ng-click="toggleItem(1, 'T11:00:00Z')">11:00 - 11:30am</div>
+                <hr class="half-hour">
+                <div ng-class="{ 'active': isSelected(1, 'T11:30:00Z'), 'dormant': !isSelected(1, 'T11:30:00Z') }" ng-click="toggleItem(1, 'T11:30:00Z')">11:30 - 12:00pm</div>
+                <hr class="hour">
+                <div ng-class="{ 'active': isSelected(1, 'T12:00:00Z'), 'dormant': !isSelected(1, 'T12:00:00Z') }" ng-click="toggleItem(1, 'T12:00:00Z')">12:00 - 12:30pm</div>
+                <hr class="half-hour">
+                <div ng-class="{ 'active': isSelected(1, 'T12:30:00Z'), 'dormant': !isSelected(1, 'T12:30:00Z') }" ng-click="toggleItem(1, 'T12:30:00Z')">12:30 - 1:00pm</div>
+                <hr class="hour">
+                <div ng-class="{ 'active': isSelected(1, 'T13:00:00Z'), 'dormant': !isSelected(1, 'T13:00:00Z') }" ng-click="toggleItem(1, 'T13:00:00Z')">1:00 - 1:30pm</div>
+                <hr class="half-hour">
+                <div ng-class="{ 'active': isSelected(1, 'T13:30:00Z'), 'dormant': !isSelected(1, 'T13:30:00Z') }" ng-click="toggleItem(1, 'T13:30:00Z')">1:30 - 2:00pm</div>
+                <hr class="hour">
+                <div ng-class="{ 'active': isSelected(1, 'T14:00:00Z'), 'dormant': !isSelected(1, 'T14:00:00Z') }" ng-click="toggleItem(1, 'T14:00:00Z')">2:00 - 2:30pm</div>
+                <hr class="half-hour">
+                <div ng-class="{ 'active': isSelected(1, 'T14:30:00Z'), 'dormant': !isSelected(1, 'T14:30:00Z') }" ng-click="toggleItem(1, 'T14:30:00Z')">2:30 - 3:00pm</div>
+                <hr class="hour">
+                <div ng-class="{ 'active': isSelected(1, 'T15:00:00Z'), 'dormant': !isSelected(1, 'T15:00:00Z') }" ng-click="toggleItem(1, 'T15:00:00Z')">3:00 - 3:30pm</div>
+                <hr class="half-hour">
+                <div ng-class="{ 'active': isSelected(1, 'T15:30:00Z'), 'dormant': !isSelected(1, 'T15:30:00Z') }" ng-click="toggleItem(1, 'T15:30:00Z')">3:30 - 4:00pm</div>
+
+              </div>
+              <div class="col-xs-4 calendar-day-right">
+                <div ng-class="{ 'active': isSelected(2, 'T09:00:00Z'), 'dormant': !isSelected(2, 'T09:00:00Z') }" ng-click="toggleItem(2, 'T09:00:00Z')">9:00 - 9:30am</div>
+                <hr class="half-hour">
+                <div ng-class="{ 'active': isSelected(2, 'T09:30:00Z'), 'dormant': !isSelected(2, 'T09:30:00Z') }" ng-click="toggleItem(2, 'T09:30:00Z')">9:30 - 10:00am</div>
+                <hr class="hour">
+
+                <div ng-class="{ 'active': isSelected(2, 'T10:00:00Z'), 'dormant': !isSelected(2, 'T10:00:00Z') }" ng-click="toggleItem(2, 'T10:00:00Z')">10:00 - 10:30am</div>
+                <hr class="half-hour">
+                <div ng-class="{ 'active': isSelected(2, 'T10:30:00Z'), 'dormant': !isSelected(2, 'T10:30:00Z') }" ng-click="toggleItem(2, 'T10:30:00Z')">10:30 - 11:00am</div>
+                <hr class="hour">
+                <div ng-class="{ 'active': isSelected(2, 'T11:00:00Z'), 'dormant': !isSelected(2, 'T11:00:00Z') }" ng-click="toggleItem(2, 'T11:00:00Z')">11:00 - 11:30am</div>
+                <hr class="half-hour">
+                <div ng-class="{ 'active': isSelected(2, 'T11:30:00Z'), 'dormant': !isSelected(2, 'T11:30:00Z') }" ng-click="toggleItem(2, 'T11:30:00Z')">11:30 - 12:00pm</div>
+                <hr class="hour">
+                <div ng-class="{ 'active': isSelected(2, 'T12:00:00Z'), 'dormant': !isSelected(2, 'T12:00:00Z') }" ng-click="toggleItem(2, 'T12:00:00Z')">12:00 - 12:30pm</div>
+                <hr class="half-hour">
+                <div ng-class="{ 'active': isSelected(2, 'T12:30:00Z'), 'dormant': !isSelected(2, 'T12:30:00Z') }" ng-click="toggleItem(2, 'T12:30:00Z')">12:30 - 1:00pm</div>
+                <hr class="hour">
+                <div ng-class="{ 'active': isSelected(2, 'T13:00:00Z'), 'dormant': !isSelected(2, 'T13:00:00Z') }" ng-click="toggleItem(2, 'T13:00:00Z')">1:00 - 1:30pm</div>
+                <hr class="half-hour">
+                <div ng-class="{ 'active': isSelected(2, 'T13:30:00Z'), 'dormant': !isSelected(2, 'T13:30:00Z') }" ng-click="toggleItem(2, 'T13:30:00Z')">1:30 - 2:00pm</div>
+                <hr class="hour">
+                <div ng-class="{ 'active': isSelected(2, 'T14:00:00Z'), 'dormant': !isSelected(2, 'T14:00:00Z') }" ng-click="toggleItem(2, 'T14:00:00Z')">2:00 - 2:30pm</div>
+                <hr class="half-hour">
+                <div ng-class="{ 'active': isSelected(2, 'T14:30:00Z'), 'dormant': !isSelected(2, 'T14:30:00Z') }" ng-click="toggleItem(2, 'T14:30:00Z')">2:30 - 3:00pm</div>
+                <hr class="hour">
+                <div ng-class="{ 'active': isSelected(2, 'T15:00:00Z'), 'dormant': !isSelected(2, 'T15:00:00Z') }" ng-click="toggleItem(2, 'T15:00:00Z')">3:00 - 3:30pm</div>
+                <hr class="half-hour">
+                <div ng-class="{ 'active': isSelected(2, 'T15:30:00Z'), 'dormant': !isSelected(2, 'T15:30:00Z') }" ng-click="toggleItem(2, 'T15:30:00Z')">3:30 - 4:00pm</div>
+              </div>
+            </div>
+
+            <div class="button-container">
+              <button class="btn white-button" ng-click="clearSelections()">
+                Deselect All
+              </button>
+              &nbsp;&nbsp;
+              <button class="btn white-button" ng-click="togglePreview()">
+                Preview
+              </button>
+              &nbsp;&nbsp;
+              <button class="btn orange-button" ng-click="sendSC()">
+                Send As Structued Content
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        Date.prototype.toDateInputValue = (function () {
+          var local = new Date(this);
+          local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+          return local.toJSON().slice(0, 10);
+        });
+        function mySelection(element) {
+          if (element.className == 'dormant') {
+            element.className = 'active';
+          } else {
+            element.className = 'dormant';
+          }
+        }
+        (function () {
+          var d = new Date();
+          $('#date-bar').val(d.toDateInputValue());
+        })();
+      </script>
+      <script src="./js/global.angular.js"></script>
+      <script src="./js/datepicker.js"></script>
+</body>
+
+</html>

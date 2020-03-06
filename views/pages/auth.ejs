@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/head.ejs %>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <!--<script src="https://js.braintreegateway.com/web/3.39.0/js/client.min.js"></script>
+    <script src="https://js.braintreegateway.com/web/3.39.0/js/apple-pay.min.js"></script>-->
+    <style>
+        .panel {
+            border-radius: 0px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            margin-top: 3rem !important;
+            margin-bottom: 3rem !important;
+            padding: 0px !important;
+        }
+        .panel-group{
+            margin: 1rem;
+        }
+        .results{
+            border: 1px #dedede solid;
+            background-color: #fafafa;
+            min-height: 50px;
+            padding: 8px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <% include ../partials/side-menu.ejs %>
+    <div class="container">
+        <div ng-app="switcher-app">
+            <div ng-controller="authPay">
+                  <h4>Send Authentication Bubble</h4>
+                <!--<h4>Send Rich Links / Apple Pay / Authentication Bubble</h4>-->
+                <!--<div class="panel panel-default">
+                    <div class="panel-heading" style="cursor:pointer;">
+                        <div class="panel-title">
+                            <h4>Rich Links</h4>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <h4><b>Send Rich Links Bubble to your customers</b></h4>
+                        <small style="font-weight: bold;">Make sure your images are WHITELISTED or else the message will fail to send.</small>
+                        <form ng-submit="sendRichLinks()">
+                            <input type="text" placeholder="URL"  name="link" ng-model="vm.richLink.link" style="width: 100%" ng-model-options="{ debounce: 1000 }" ng-change="retrieveOG()"><br><br>
+                            <input type="text" placeholder="Title"  name="title" ng-model="vm.richLink.title" style="width: 100%"><br><br>
+                            <input type="text" placeholder="Image URL"  name="imageurl" ng-model="vm.richLink.imageurl" style="width: 100%"><br><br>
+                            <input type="submit" value="Send Rich Link" class="btn btn-outline" type="button" style="border: solid 1px #ccc">
+                        </form>
+                        <br>
+                        <p class="results" id="global-demo-results" ng-bind="vm.richLink.result">Results will be printed here</p>
+                        <div id="dropin-container"></div>
+                    </div>
+                </div>-->
+                <!--<div class="panel panel-default">
+                    <div class="panel-heading" style="cursor:pointer;">
+                        <div class="panel-title">
+                            <h4>Apple Pay</h4>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <h4><b>Send Apple Pay Bubble to your customers</b></h4>
+                        <a target="_self" href="./listPicker">For customized items, click here to use the List Picker Product Catalogs</a>
+                        <form ng-submit="sendApplePay()">
+                            <input type="submit" value="Send Apple Pay Bubble" ng-disabled="!vm.applePay.submittable" class="btn btn-outline" type="button" style="border: solid 1px #ccc">
+                        </form>
+                        <br>
+                        <p class="results" id="global-demo-results" ng-bind="vm.applePay.result">Results will be printed here</p>
+                        <div id="dropin-container"></div>
+                    </div>
+                </div>-->
+                <div class="panel panel-default">
+                    <div class="panel-heading" style="cursor:pointer;">
+                        <div class="panel-title">
+                            <h4>Authentication</h4>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <h4><b>Send Authentication Bubble to your customers</b></h4>
+                        <form ng-submit="sendAuth()">
+                            <input type="submit" value="Send Authentication Challenge" ng-disabled="!vm.auth.submittable" class="btn btn-outline" type="button" style="border: solid 1px #ccc">
+                        </form>
+                        <br>
+                        <p class="results" id="global-demo-results" ng-bind="vm.auth.result">Results will be printed here</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script src="./js/global.angular.js"></script>
+    <script src="./js/rlauthpay-app-controller.js"></script>
+    <!--<script>
+
+        app.controller("authPay", function($scope, $rootScope, $http, $location, $timeout, $interval, agentSdkFactory) {
+            if (!agentSdkFactory.isInit) {
+                agentSdkFactory.init();
+                ("agent sdk init");
+            }
+
+            const nonce = () => {
+                var text = "";
+                const length = 8;
+                var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+                for(var i = 0; i < length; i++) {
+                    text += possible.charAt(Math.floor(Math.random() * possible.length));
+                }
+                return text;
+            };
+
+            $scope.vm = {
+                auth:{
+                    submittable: true,
+                    result: 'Authentication results will be shown here when available...',
+                    completed: false
+                },
+                applePay:{
+                    submittable: true,
+                    result: 'Apple pay results will be shown here when available...'
+                },
+                richLink:{
+                    title: '',
+                    link: '',
+                    imageurl: '',
+                    result: ''
+                }
+            };
+
+            $scope.data = {
+                convId: '',
+                accountId: ''
+            };
+
+            $scope.retrieveOG = function(){
+                $http({
+                    method: 'POST',
+                    url: './apayAuth/richLinkOg',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    data: {
+                        link: $scope.vm.richLink.link
+                    }
+                }).then(function(success){
+                    $scope.vm.richLink.title = success.data.title;
+                    $scope.vm.richLink.imageurl = success.data.imageurl;
+                });
+            };
+
+            $scope.sendRichLinks = function(){
+                var richLinkJson = {"type":"vertical","tag":"richLink","elements":[{"type":"image","url":""},{"type":"button","title":"","click":{"actions":[{"type":"link","uri":""}]}}]};
+
+                richLinkJson.elements[0].url = $scope.vm.richLink.imageurl;
+                richLinkJson.elements[1].title =  $scope.vm.richLink.title;
+                richLinkJson.elements[1].click.actions[0].uri = $scope.vm.richLink.link;
+
+                agentSdkFactory.sendSC(richLinkJson, []);
+                $scope.vm.richLink.result = 'Rich Link bubble sent to visitor';
+            }
+
+            $scope.sendApplePay = function(){
+                var payJson = {"type":"vertical","tag":"payment","elements":[{"type":"text","text":"Apple Pay Request"}]};
+                var paymentGatewayUrl = 'https://messagingagentwidgets.herokuapp.com/apayAuth/paymentGateway';
+                
+                // if (window.ApplePaySession && ApplePaySession.canMakePayments()) {
+                //     console.log('This device supports Apple Pay.');
+                // }else{
+                //     console.log('This device DOES NOT Apple Pay.');
+                // }
+
+                // $http({
+                //     method: 'GET',
+                //     url: 'https://messagingagentwidgets.herokuapp.com/apayAuth/' + $scope.data.accountId + '/' + $scope.data.convId + '/clientToken'
+                // }).then(function(success){
+                //     console.log(success);
+                //     braintree.client.create({
+                //         authorization: success.data.token,
+                //     }, function (err, clientInstance) {
+                //         if (err) {
+                //             console.error('Error creating clientInstance:', err);
+                //             return;
+                //         }
+                //         console.log(clientInstance);
+                //         braintree.applePay.create({
+                //             client: clientInstance
+                //         }, function (applePayErr, applePayInstance) {
+                //             if (applePayErr) {
+                //                 console.error('Error creating applePayInstance:', applePayErr);
+                //                 return;
+                //             }
+
+
+                $http({
+                    method: 'GET',
+                    url: 'https://messagingagentwidgets.herokuapp.com/apayAuth/paymentSession'
+                }).then(function(success){
+                    var merchSessionData = success.data;
+                    const merchantSessionId = 'To-add';//clientInstance._configuration.analyticsMetadata.sessionId;
+                    const merchantId = '';
+                    const paymentIdentifier = uuid();
+                    var payMeta = [{"type":"BusinessChatMessage","receivedMessage":{"style":"icon","subtitle":"Complete Purchase: iCloud Upgrade","title":"2TB Tier","imageURL":"https://chrisjamestest.neocities.org/img/lplogo.png"}},{"type":"ConnectorPaymentRequest","apple":{"data":{"version":"1.0","payment":{"paymentRequest":{"applePay":{"merchantIdentifier":"merchant.com.example.abcdemo","merchantCapabilities":["supports3DS","supportsCredit","supportsDebit"],"supportedNetworks":["amex","visa","mastercard"]},"lineItems":[{"label":"iCloud Subscript 2TB at 9.99/month","amount":"9.99","type":"pending"}],"total":{"label":"iCloud Subscript 2TB at 9.99/month","amount":"9.99","type":"pending"},"countryCode":"US","currencyCode":"USD","supportedCountries":["US"],"shippingMethods":[{"label":"Free Shipping","detail":"Arrives in 5 to 7 days","amount":"0.00","identifier":"FreeShip"}]},"endpoints":{"paymentGatewayUrl":paymentGatewayUrl,"fallbackUrl":paymentGatewayUrl},"merchantSession":{"epochTimestamp":new Date().getTime(),"expiresAt":new Date().getTime()+86400000,"merchantSessionIdentifier":merchantSessionId,"nonce":'',"merchantIdentifier":"merchant.com.example.abcdemo","displayName":"Foo Bar","signature":"MIIBCgKCAQEAwRHSQCu5ZhGVKYRZwbziP3OyCdTOr3AOnWbOSKoZ+ulRZloYXignbv7OpQno54P2xvKJFbN4jPQC+2ad9pR5DbYVmQZON1haZaEWTrEpTGhWdsQjZL8fVUcqrMnc5sEsvCxtybi8ymo+bGihTmgsAyz2VeO3HI7ChBoQNcf3lXdcxTQ8bVVl9jSpY0RSH6G4zgwBDaHIsxl/pr787grkOnWBed9fVNHrickojJZIiahoH5tSCekF1KU6lRbeT9ot/fKfrh6O5+eCgCCDB5y2M/LgyFstcHNy/xjj87UQskwRsvPWXgrwNQ62Ep6FKFb7hsPPArlzHXIcshuE1kx8IQIDAQAB","initiative":"messaging","initiativeContext":paymentGatewayUrl,"signedFields":["merchantIdentifier","merchantSessionIdentifier","initiative","initiativeContext","displayName","nonce"]}},"requestIdentifier":paymentIdentifier}}}];
+                    payMeta[1].apple.data.requestIdentifier = paymentIdentifier;
+                    payMeta[1].apple.data.payment.merchantSession = merchSessionData;
+                    $scope.vm.applePay.completed = false;
+                    agentSdkFactory.sendSC(payJson, payMeta);
+                });
+
+
+                //         });
+                //     });
+                //});
+
+            };  
+
+
+
+            $scope.sendAuth = function(){
+                var authJson = {"type":"vertical","tag":"authentication","elements":[{"type":"text","text":"Authentication Request"}]};
+                var authMeta =[{"type":"BusinessChatMessage","receivedMessage":{"title":"Tap here to sign in","subtitle":"Thank you","imageURL":"https://s3.amazonaws.com/sc-tasks/Assets/misc/lplogo.png","style":"small"},"replyMessage":{"title":"Successfully signed in!","subtitle":"Thank you","imageURL":"https://s3.amazonaws.com/sc-tasks/Assets/misc/lplogo.png","style":"small"}},{"type":"ConnectorAuthenticationRequest","requestIdentifier":""}];
+                authMeta[1].requestIdentifier = uuid();
+                agentSdkFactory.sendSC(authJson, authMeta);
+                $scope.vm.auth.result = 'Authentication bubble sent to visitor';
+                $scope.vm.auth.completed = false;
+                $timeout(()=>{
+                    $scope.vm.auth.result = 'Waiting on authentication result... ';
+                }, 2250);
+            };
+
+            agentSdkFactory.getProperty('chatInfo.rtSessionId', (data) =>{
+                //get user name, bubble up their messages to top
+                $scope.data.convId = data;
+            }, err => {
+                console.log(err);
+            });
+
+            agentSdkFactory.getProperty('chatInfo.accountId', (data) =>{
+                //get user name, bubble up their messages to top
+                $scope.data.accountId = data;
+            }, err => {
+                console.log(err);
+            });
+
+            $interval( ()=>{
+                if($scope.data.accountId && $scope.data.convId){
+                    if(!$scope.vm.auth.completed){
+                        $http({
+                            method: 'GET',
+                            url: './apayAuth/' + $scope.data.accountId + '/' + $scope.data.convId + '/auth'
+                        }).then(function(resp){
+                            //console.log(resp);
+                            if(resp.data.success){
+                                $scope.vm.auth.completed = true;
+                                $scope.vm.auth.result = 'Authentication completed! ' + JSON.stringify(resp.data.token);
+                            }
+                        }); 
+                    }
+                }
+            }, 2000);
+        });
+    </script>-->
+</body>
+</html>

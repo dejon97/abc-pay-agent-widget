@@ -1,0 +1,10 @@
+{
+  "configuration_id": "a23c467d-1212-4b3a-5555-93e788a3622a",
+  "name": "Example configuration",
+  "conversions": {
+    "segment": {
+      "enabled": true,
+      "selector_tags": ["h1", "h2", "h3", "h4", "h5", "h6"]
+    }
+  }
+}

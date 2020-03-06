@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+    integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+  <script src="https://js.braintreegateway.com/web/3.39.0/js/client.min.js"></script>
+  <script src="https://js.braintreegateway.com/web/3.39.0/js/apple-pay.min.js"></script>
+  <% include ../partials/head.ejs %>
+  <style>
+    #content {
+      padding: 0px !important;
+    }
+
+    .modal-content {
+      padding: 0px !important;
+      min-height: 840px;
+    }
+
+    .panel-header {
+      padding: 0px !important;
+    }
+
+    .modal {
+      padding: 0px !important
+    }
+  </style>
+</head>
+
+<body>
+  <% include ../partials/side-menu.ejs %>
+  <div ng-app="switcher-app">
+    <div ng-controller="catalogCtrl">
+
+      <div class="container">
+        <div>
+          <ul id="buttonContainer" class="nav nav-pills nav-stacked">
+            <li class="index-pill"><a href="#" ng-click="sendContent('section|trade-in')">Get Trade-In Information</a></li>
+            <li class="index-pill"><a href="#" ng-click="sendContent('catalog')">Send Upgrade Options</a></li>
+            <li class="index-pill"><a href="#" ng-click="sendContent('offers')">Send Special Offers</a></li>
+            <li class="index-pill"><a href="#" ng-click="sendContent('applePay')">Buy with Apple Pay</a></li>
+            <li class="index-pill"><a href="#" ng-click="sendContent('survey')">Post Conversation Survey</a></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <script src="./js/global.angular.js"></script>
+  <script src="./js/catalog.js"></script>
+  <!-- <script src="./js/apay.js"></script> -->
+  <script src="https://js.stripe.com/v3/"></script>
+  <script type="text/javascript">
+    var stripe = Stripe('pk_test_m3ObhECIzGzK7rH89qTreXQK00VGJaH30s');
+  </script>
+</body>
+
+</html>

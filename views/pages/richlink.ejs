@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/head.ejs %>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+
+    <style>
+        .flex-container {
+            display: flex;
+        }
+        
+        .flex-container > div {
+            margin: 5px 5px 5px 0;
+        }
+
+        .container.rich-link {
+            margin: auto !important;
+            width: 300px;     
+        }
+
+        .loader {
+            border: 16px solid #f3f3f3; /* Light grey */
+            border-top: 16px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 90px;
+            height: 90px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <% include ../partials/side-menu.ejs %>
+    <div ng-app="switcher-app">
+        <div ng-controller="richLinkCtrl">
+            <div class="container rich-link">
+                <h4>Rich Links</h4>
+                <div>
+                    <form name="myForm">
+                        <div class="flex-container">
+                            <div>
+                                <input autocomplete="on" type="url" required md-no-asterisk name="urlInput" ng-model="data.url" class="form-control search-bar-main" placeholder="Enter URL">
+                                <div>
+                                    <div translate="required" ng-show="!!myForm.urlInput.$error.required" style="color: red"></div>
+                                    <div translate="invalidUrl" ng-show="!!myForm.urlInput.$error.url" style="color: red"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <button formnovalidate translate='preview' ng-disabled='loading || !myForm.urlInput.$error' type="submit" class="btn white-button" ng-click='scrape(myForm.urlInput.$error, data.url)'></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div style="margin: auto; width:200px">
+                    <div class="loader" ng-show="loading"></div>
+                    <div>
+                        <div id="container" ng-show='structuredContent && !loading'>
+                            <div id="child"></div>
+                        </div>
+                    </div>
+                    <div style="text-align: center">
+                        <button translate='sendSc' class="btn white-button" ng-show="structuredContent && !loading" ng-click="sendSC()"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/global.angular.js"></script>
+    <script src="../js/richlink-controller.js"></script>
+</body>
+</html>
