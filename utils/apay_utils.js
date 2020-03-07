@@ -21,8 +21,10 @@ module.exports = {
     extractMerchantId(cert) {
         try {
           var info = x509.parseCert(cert);
-          let merchantId = info.extensions['1.2.840.113635.100.6.32'].substr(2);
-          console.log(`[utils/apay_utils] :: Merchant ID: ${merchantId}`);
+          console.log(`Cert ${JSON.stringify(info)}`);
+
+          let merchantId = info.extensions['1.2.840.113635.100.6.32'].substr(4);
+          console.log(`[utils/apay_utils] :: Merchant ID: -->${merchantId}<--`);
           return merchantId;
         } catch (e) {
           console.error("Unable to extract merchant ID from certificate ");

@@ -12,7 +12,7 @@ const isImage = require('is-image-url');
 const apayUtils = require('../utils/apay_utils');
 const apayCerts = require('../utils/apay_certs');
 const keyPublishable = process.env.STRIPE_PUBLISHABLE;
-const keySecret = process.env.STRIPE_SECRET;
+const keySecret = 'sk_test_iKm42jZuuFJfFsvfMy6Mq9iT00LvgNGlEn';
 
 const PaymentToken = require('apple-pay-decrypt')
 
@@ -62,28 +62,45 @@ const processPaymentGateway = (req, res) => {
 
     console.log(`Decrypted data is ${paymentDataDecrypted}`);
 
-    res.send({status: 'STATUS_SUCCESS'});
+    // res.send({status: 'STATUS_SUCCESS'});
 
-    // stripe.customers.create({
-    //     email: 'test@xyz.com'
-    // }).then(customer => {
-    //     console.log(`Customer is ${JSON.stringify(customer)}`);
+    const paymentData = JSON.parse(paymentDataDecrypted);
 
-    //     stripe.charges.create({
-    //         amount: 10,
-    //         description: 'test payment',
-    //         currency: 'usd',
-    //         customer: customer.id
-    //     }).then(charge => {
-    //         console.log(`Charge is ${JSON.stringify(charge)}`);
+    const { applicationPrimaryAccountNumber, applicationExpirationDate, transactionAmount } = paymentData;
 
-    //         res.send({status: 'STATUS_SUCCESS'});
-    //     }).catch(e => {
-    //         res.status(500).send({status: 'FAILED TO COMPLETE CHARGE'});
-    //     })
-    // }).catch(e => {
-    //     res.status(500).send({status: 'FAILED TO GENERATE CUSTOMER'});
-    // });
+    console.log("Before Stripe Pay");
+
+    const expYear = parseInt(applicationExpirationDate.substr(0, applicationExpirationDate.length-4));
+    const expMonth = parseInt(applicationExpirationDate.substr(applicationExpirationDate.length-4, 2));
+
+    stripe.tokens.create({
+        card: {
+            //number: applicationPrimaryAccountNumber,
+            number: '4242424242424242',
+            exp_month: expMonth,
+            exp_year: expYear
+        },
+    }).then(token => {
+        console.log(`token is ${JSON.stringify(token)}`);
+
+        // res.send({status: 'STATUS_SUCCESS'});
+
+        stripe.charges.create({
+            amount: transactionAmount,
+            currency: 'usd',
+            source: token.id,
+            description: 'First Test Payment'
+        }).then(charge => {
+            console.log(`Charge is ${JSON.stringify(charge)}`);
+
+            res.send({status: 'STATUS_SUCCESS'});
+        }).catch(e => {
+            console.log(e);
+            res.status(500).send({status: 'FAILED TO COMPLETE CHARGE'});
+        })
+    }).catch(e => {
+        res.status(500).send({status: 'FAILED TO GENERATE TOKEN'});
+    });
 }
 
 // router.post('/:account/:convId/auth', function(req, res){
@@ -141,6 +158,40 @@ router.get('/:account/:convId/pay', function(req, res){
     }else{
         res.send({ success: false });
     }
+});
+
+router.get('/stripe', function(req, res) {
+
+    console.log("Inside Stripe Pay");
+
+    stripe.tokens.create({
+        card: {
+            number: '4242424242424242',
+            exp_month: 12,
+            exp_year: 2023
+        },
+    }).then(token => {
+        console.log(`token is ${JSON.stringify(token)}`);
+
+        // res.send({status: 'STATUS_SUCCESS'});
+
+        stripe.charges.create({
+            amount: 999,
+            currency: 'usd',
+            source: token.id,
+            description: 'First Test Payment'
+        }).then(charge => {
+            console.log(`Charge is ${JSON.stringify(charge)}`);
+
+            res.send({status: 'STATUS_SUCCESS'});
+        }).catch(e => {
+            console.log(e);
+            res.status(500).send({status: 'FAILED TO COMPLETE CHARGE'});
+        })
+    }).catch(e => {
+        res.status(500).send({status: 'FAILED TO GENERATE TOKEN'});
+    });
+
 });
 
 
