@@ -37,7 +37,7 @@
     "node-agent-sdk": "^1.1.4",
     "node-forge": "^0.9.1",
     "og": "0.0.2",
-    "open-graph": "^0.2.4",
+    "open-graph": "^0.2.6",
     "path": "^0.12.7",
     "request": "^2.88.0",
     "socket.io": "^2.2.0",
