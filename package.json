@@ -16,7 +16,7 @@
   "dependencies": {
     "angular-file-upload": "^2.5.0",
     "apple-pay-decrypt": "^1.0.8",
-    "aws-sdk": "^2.360.0",
+    "aws-sdk": "^2.814.0",
     "body-parser": "^1.18.3",
     "braintree": "^2.13.1",
     "btoa": "^1.2.1",
